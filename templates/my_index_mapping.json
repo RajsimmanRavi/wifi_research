@@ -1,0 +1,1 @@
+{"snoop":{"mappings":{"wifi_traffic":{"properties":{"channel_frequency":{"type":"text"},"sensor_location":{"type":"geo_point"},"signal_strength":{"type":"text"},"source_mac":{"type":"text","fields":{"raw":{"type":"keyword"}}},"ssid":{"type":"text","fields":{"raw":{"type":"keyword"}}},"timestamp":{"type":"date"}}}}}}

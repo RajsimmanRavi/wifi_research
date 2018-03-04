@@ -61,7 +61,9 @@ iwconfig $MONITOR_INTERFACE channel $CHANNEL
 # File name for the pcap
 # Get IP Address of the sensor
 IP=`/sbin/ifconfig $MANAGED_INTERFACE | grep -w 'inet' | awk '{print $2}' | sed 's/\./_/g'`
-FILE_NAME="$IP-PCAP-`date '+%Y-%m-%d_%H-%M-%S'`"
+#LOC=`curl ipinfo.io/$(curl ipinfo.io/ip) | grep 'loc' | awk -F ':' '{print $2}' | tr '.' '_' | tr ',' '_' | tr -d '\"' | tr -d '[:space:]'`
+LOC=`curl ipinfo.io/$(curl ipinfo.io/ip) | jq '.loc' | tr ',' ':' | tr '.' '_' | tr -d '\"' | tr -d '[:space:]'`
+FILE_NAME="$LOC-PCAP-`date '+%Y-%m-%d_%H-%M-%S'`"
 
 # TCPDUMP FOR AMOUNT OF TIME
 /usr/sbin/tcpdump -tttt -nei $MONITOR_INTERFACE -G $MONITORING_TIME_DURATION -W 1 -v type mgt subtype probe-req -w "$DIR_NAME/$FILE_NAME.pcap"
@@ -70,7 +72,7 @@ FILE_NAME="$IP-PCAP-`date '+%Y-%m-%d_%H-%M-%S'`"
 #tar czf $DIR_NAME/$FILE_NAME.tar.gz --directory=$DIR_NAME $FILE_NAME.pcap
 
 # SCP THAT FILE 
-scp -i $PRIVATE_KEY $DIR_NAME/$FILE_NAME.pcap ubuntu@10.2.1.12:~/sniff_captures/
+scp -i $PRIVATE_KEY $DIR_NAME/$FILE_NAME.pcap ubuntu@10.2.1.24:~/sniff_captures/
 
 # REMOVE THOSE FILES
 rm $DIR_NAME/$FILE_NAME.pcap
