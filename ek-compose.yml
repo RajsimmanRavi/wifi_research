@@ -1,0 +1,23 @@
+version: "3.2"
+services:
+  elasticsearch:
+    image: perplexedgamer/elastic-savi:latest
+    ports:
+      -  target: 9200
+         published: 9200
+         protocol: tcp
+         mode: host         
+    #ports:
+    #  - 9200:9200
+  kibana:
+    image: perplexedgamer/kibana-savi:latest
+    ports:
+      -  target: 5601
+         published: 5601
+         protocol: tcp
+         mode: host         
+    #ports:
+    #  - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://10.2.1.24:9200
+# Be sure to run this command: sudo sysctl -w vm.max_map_count=262144 
