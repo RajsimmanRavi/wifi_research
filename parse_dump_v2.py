@@ -57,6 +57,7 @@ try:
     es.indices.create(index=index_name, body = mapping)
 except:
     print("skipping create")
+    pass
 
 def send_to_elastic(msg):
   try:
@@ -100,7 +101,11 @@ def read_pcap(f_name):
         src_mac = pkt[Dot11].addr2
 
         # Check for any SSID? Also Decode it
-        ssid = (pkt[Dot11Elt].info).decode("utf-8")
+        try:
+            ssid = (pkt[Dot11Elt].info).decode("utf-8")
+        except:
+            ssid = "" # Just set it as blank
+            pass
 
         # Get latitude and longitude
         lat_long = f_name.split("-PCAP")
