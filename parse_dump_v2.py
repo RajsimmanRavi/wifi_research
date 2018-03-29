@@ -108,15 +108,20 @@ def read_pcap(f_name):
             pass
 
         # Get latitude and longitude
-        lat_long = f_name.split("-PCAP")
-        lat = lat_long[0].split(":")[0]
-        lon = lat_long[0].split(":")[1]
+        try:
+            lat_long = f_name.split("-PCAP")
+            lat = lat_long[0].split(":")[0]
+            lon = lat_long[0].split(":")[1]
 
-        lat = float(lat.replace("_","."))
-        lon = float(lon.replace("_","."))
+            lat = float(lat.replace("_","."))
+            lon = float(lon.replace("_","."))
 
-        print("Latitude: %s" % lat)
-        print("Longitude: %s" % lon)
+            print("Latitude: %s" % lat)
+            print("Longitude: %s" % lon)
+        except:
+            lat = ""
+            lon = ""
+            pass
 
         msg = {
           'timestamp': datetime_object,
